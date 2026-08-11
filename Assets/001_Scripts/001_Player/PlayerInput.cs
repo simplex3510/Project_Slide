@@ -11,6 +11,8 @@ namespace Player
         // PlayerDodge 등에서 구독하여 사용
         public event Action OnDodgeInput;
 
+        public Vector2 FacingDirection { get; private set; } = Vector2.down;
+
         // 다른 스크립트(PlayerMovement 등)가 읽어갈 현재 입력 방향
         public Vector2 MoveDirection { get; private set; }
 

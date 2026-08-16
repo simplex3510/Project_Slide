@@ -9,15 +9,12 @@ namespace Player
     {
         // 구르기 진행 상태
         // Ready: 대기 중, 입력 받으면 Startup으로 전이
-        // Startup: 선딜 구간 (무적 아님)
-        // Active: 실제 이동 + 무적 구간(iframe)
-        // Recovery: 후딜 구간 (무적 아님)
         private enum DodgeState
         {
-            Ready,
-            Startup,
-            Active,
-            Recovery
+            Ready,      // Ready: 대기 중, 입력 받으면 Startup으로 전이
+            Startup,    // Startup: 선딜레이(Pre-Delay) 구간 (무적 아님)
+            Active,     // Active: 실제 이동 + 무적 구간(iframe)
+            Recovery    // Recovery: 후딜레이(Post-Delay) 구간 (무적 아님)
         }
 
         [Header("구르기 수치 (임시값, 추후 조정 예정)")]
@@ -30,9 +27,17 @@ namespace Player
         [Range(0f, 1f)][SerializeField] private float activeRatio = 0.65f;
         [Range(0f, 1f)][SerializeField] private float recoveryRatio = 0.20f;
 
+
+        [Header("시각적 피드백 (임시 - 추후 애니메이션으로 대체 예정)")]
+        [SerializeField] private Color invincibleColor = new Color(1f, 1f, 1f, 0.5f);
+        // 반투명으로 무적 표현
+
+
         private Rigidbody2D rb;
         private PlayerInput playerInput;
         private PlayerMovement playerMovement;
+        private SpriteRenderer spriteRenderer;
+        private Color originalColor;
 
         private DodgeState currentState = DodgeState.Ready;
         private float stateTimer;      // 현재 상태(Startup/Active/Recovery)에 머문 시간
@@ -56,6 +61,10 @@ namespace Player
             rb = GetComponent<Rigidbody2D>();
             playerInput = GetComponent<PlayerInput>();
             playerMovement = GetComponent<PlayerMovement>();
+
+            // Root/Graphic에 위치한 SpriteRenderer 참조
+            spriteRenderer = GetComponentInChildren<SpriteRenderer>();
+            originalColor = spriteRenderer.color;
         }
 
         private void OnEnable()
@@ -66,14 +75,6 @@ namespace Player
         private void OnDisable()
         {
             playerInput.OnDodgeInput -= HandleDodgeInput;
-        }
-
-        private void Update()
-        {
-            if (cooldownTimer > 0f)
-            {
-                cooldownTimer -= Time.deltaTime;
-            }
         }
 
         private void FixedUpdate()
@@ -110,13 +111,29 @@ namespace Player
                     break;
             }
         }
+
+        private void Update()
+        {
+            if (cooldownTimer > 0f)
+            {
+                cooldownTimer -= Time.deltaTime;
+            }
+        }
         #endregion
 
         private void TransitionTo(DodgeState nextState)
         {
             currentState = nextState;
             stateTimer = 0f;
+            
+            UpdateInvincibilityVisual();
         }
+
+        private void UpdateInvincibilityVisual()
+        {
+            spriteRenderer.color = IsInvincible ? invincibleColor : originalColor;
+        }
+
 
         private void MoveDuringDodge()
         {

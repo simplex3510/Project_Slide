@@ -733,6 +733,7 @@ GameObject:
   - component: {fileID: 1661695511}
   - component: {fileID: 1661695510}
   - component: {fileID: 1661695513}
+  - component: {fileID: 1661695514}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -846,6 +847,24 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerMovement
   moveSpeed: 5
+--- !u!114 &1661695514
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1661695508}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f9c76660cfa178d4b8ffc6e089051157, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Player.PlayerDodge
+  dodgeDistance: 3
+  dodgeDuration: 0.3
+  cooldown: 0.8
+  startupRatio: 0.2
+  activeRatio: 0.65
+  recoveryRatio: 0.2
 --- !u!1 &1729012850
 GameObject:
   m_ObjectHideFlags: 0

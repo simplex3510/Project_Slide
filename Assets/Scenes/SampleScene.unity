@@ -865,6 +865,7 @@ MonoBehaviour:
   startupRatio: 0.2
   activeRatio: 0.65
   recoveryRatio: 0.2
+  invincibleColor: {r: 1, g: 1, b: 1, a: 0.5}
 --- !u!1 &1729012850
 GameObject:
   m_ObjectHideFlags: 0
@@ -875,6 +876,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1729012851}
   - component: {fileID: 1729012852}
+  - component: {fileID: 1729012853}
   m_Layer: 0
   m_Name: HurtBox
   m_TagString: Untagged
@@ -934,6 +936,18 @@ CapsuleCollider2D:
   m_Offset: {x: 0, y: 0}
   m_Size: {x: 1, y: 2}
   m_Direction: 0
+--- !u!114 &1729012853
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1729012850}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ae5f2b68595ca8641b1fa22cff693551, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Hurtbox
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
